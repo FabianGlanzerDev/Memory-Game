@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "ES6",
+        "module": "none",
+        "rootDir": "./src/ts",
+        "outDir": "./scripts",
+        "strict": true
+    },
+    "include": [
+        "./src/ts/**/*.ts"
+    ]
+}
