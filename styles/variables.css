@@ -1,8 +1,10 @@
 :root {
     --content-width: 1440px;
 
-    --color-dark: #292b2a;
+    --font-body: "Almarai", sans-serif;
+    --font-display: "Red Rose", serif;
+
+    --color-primary-dark: #303131;
+    --color-primary-yellow: #f0ea6e;
     --color-white: #ffffff;
-    --color-yellow: #f4f75d;
-    --color-black: #242424;
 }
