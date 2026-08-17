@@ -5,6 +5,27 @@ const THEME_PREVIEWS = {
     projects: './assets/img/settings/da-projects.svg',
     foods: './assets/img/settings/foods.svg'
 };
+const CARD_FRONTS = {
+    coding: createCardPaths('coding'),
+    gaming: createCardPaths('gaming'),
+    projects: createCardPaths('projects'),
+    foods: createCardPaths('foods')
+};
+let openedCards = [];
+let boardLocked = false;
+let flipTimeout;
+let currentPlayer = 'blue';
+let scores = { blue: 0, orange: 0 };
+function formatCardIndex(index) {
+    return index < 10 ? `0${index}` : String(index);
+}
+function createCardPaths(theme) {
+    const paths = [];
+    for (let index = 1; index <= 18; index++) {
+        paths.push(`./assets/img/cards/${theme}/front-${formatCardIndex(index)}.png`);
+    }
+    return paths;
+}
 function showSettings() {
     var _a, _b;
     (_a = document.getElementById('home-screen')) === null || _a === void 0 ? void 0 : _a.classList.add('hidden');
@@ -53,23 +74,118 @@ function getGameSettings() {
         cardCount: Number(getCheckedValue('board-size'))
     };
 }
-function createMemoryCard(index) {
-    const card = document.createElement('button');
+function createDeck(settings) {
+    var _a;
+    const fronts = (_a = CARD_FRONTS[settings.theme]) !== null && _a !== void 0 ? _a : CARD_FRONTS.coding;
+    const selected = fronts.slice(0, settings.cardCount / 2);
+    const deck = [];
+    selected.forEach((image, pairId) => addPair(deck, image, pairId));
+    return shuffleDeck(deck);
+}
+function addPair(deck, image, pairId) {
+    deck.push({ pairId, image });
+    deck.push({ pairId, image });
+}
+function shuffleDeck(deck) {
+    for (let index = deck.length - 1; index > 0; index--) {
+        const randomIndex = Math.floor(Math.random() * (index + 1));
+        [deck[index], deck[randomIndex]] = [deck[randomIndex], deck[index]];
+    }
+    return deck;
+}
+function createCardFace(className) {
+    const face = document.createElement('span');
+    face.className = `memory-card-face ${className}`;
+    return face;
+}
+function createFrontFace(image) {
+    const face = createCardFace('memory-card-front');
+    const img = document.createElement('img');
+    img.src = image;
+    img.alt = '';
+    face.append(img);
+    return face;
+}
+function configureCard(card, data, index) {
     card.className = 'memory-card';
     card.type = 'button';
+    card.dataset.pairId = String(data.pairId);
     card.dataset.cardIndex = String(index);
     card.setAttribute('aria-label', `Memory card ${index + 1}`);
+    card.setAttribute('aria-pressed', 'false');
+}
+function createMemoryCard(data, index) {
+    const card = document.createElement('button');
+    const inner = document.createElement('span');
+    configureCard(card, data, index);
+    inner.className = 'memory-card-inner';
+    inner.append(createCardFace('memory-card-back'), createFrontFace(data.image));
+    card.append(inner);
+    card.addEventListener('click', () => handleCardClick(card));
     return card;
 }
-function renderBoard(cardCount) {
+function renderBoard(settings) {
     const board = document.getElementById('game-board');
-    const columns = cardCount === 16 ? 4 : 6;
+    const columns = settings.cardCount === 16 ? 4 : 6;
     if (!board)
         return;
     board.replaceChildren();
     board.style.setProperty('--board-columns', String(columns));
-    for (let index = 0; index < cardCount; index++)
-        board.append(createMemoryCard(index));
+    createDeck(settings).forEach((data, index) => board.append(createMemoryCard(data, index)));
+}
+function canFlipCard(card) {
+    return !boardLocked
+        && !card.classList.contains('is-flipped')
+        && card.dataset.matched !== 'true';
+}
+function flipCard(card) {
+    card.classList.add('is-flipped');
+    card.setAttribute('aria-pressed', 'true');
+}
+function handleCardClick(card) {
+    if (!canFlipCard(card))
+        return;
+    flipCard(card);
+    openedCards.push(card);
+    if (openedCards.length === 2)
+        checkOpenCards();
+}
+function checkOpenCards() {
+    const [first, second] = openedCards;
+    if (first.dataset.pairId === second.dataset.pairId) {
+        keepMatchedCards();
+        return;
+    }
+    boardLocked = true;
+    flipTimeout = window.setTimeout(closeOpenCards, 850);
+}
+function keepMatchedCards() {
+    openedCards.forEach((card) => {
+        card.dataset.matched = 'true';
+        card.disabled = true;
+    });
+    addPoint();
+    openedCards = [];
+}
+function closeOpenCards() {
+    openedCards.forEach((card) => {
+        card.classList.remove('is-flipped');
+        card.setAttribute('aria-pressed', 'false');
+    });
+    switchPlayer();
+    openedCards = [];
+    boardLocked = false;
+    flipTimeout = undefined;
+}
+function resetCardInteraction() {
+    if (flipTimeout !== undefined)
+        window.clearTimeout(flipTimeout);
+    openedCards = [];
+    boardLocked = false;
+    flipTimeout = undefined;
+}
+function normalizePlayer(player) {
+    return player === 'orange' ? 'orange' : 'blue';
 }
 function updateCurrentPlayer(player) {
     const label = document.getElementById('current-player');
@@ -78,14 +194,38 @@ function updateCurrentPlayer(player) {
         label.textContent = player === 'orange' ? 'Orange' : 'Blue';
     indicator === null || indicator === void 0 ? void 0 : indicator.setAttribute('data-player', player);
 }
+function updateScore(player) {
+    const output = document.getElementById(`${player}-score`);
+    if (output)
+        output.textContent = String(scores[player]);
+}
+function addPoint() {
+    scores[currentPlayer] += 1;
+    updateScore(currentPlayer);
+}
+function switchPlayer() {
+    currentPlayer = currentPlayer === 'blue' ? 'orange' : 'blue';
+    updateCurrentPlayer(currentPlayer);
+}
+function resetScores() {
+    scores = { blue: 0, orange: 0 };
+    updateScore('blue');
+    updateScore('orange');
+}
+function resetPlayerState(player) {
+    currentPlayer = normalizePlayer(player);
+    resetScores();
+    updateCurrentPlayer(currentPlayer);
+}
 function prepareGameScreen(settings) {
     const gameScreen = document.getElementById('game-screen');
     if (!gameScreen)
         return;
     gameScreen.dataset.theme = settings.theme;
     gameScreen.dataset.size = String(settings.cardCount);
-    updateCurrentPlayer(settings.player);
-    renderBoard(settings.cardCount);
+    resetCardInteraction();
+    resetPlayerState(settings.player);
+    renderBoard(settings);
 }
 function startGame() {
     var _a, _b;
@@ -95,6 +235,7 @@ function startGame() {
 }
 function exitGame() {
     var _a, _b;
+    resetCardInteraction();
     (_a = document.getElementById('game-screen')) === null || _a === void 0 ? void 0 : _a.classList.add('hidden');
     (_b = document.getElementById('settings-screen')) === null || _b === void 0 ? void 0 : _b.classList.remove('hidden');
 }
