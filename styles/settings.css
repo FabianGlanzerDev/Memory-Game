@@ -160,7 +160,7 @@
     position: absolute;
     top: 50%;
     left: calc(100% + 8px);
-    width: 40px;
+    width: 46px;
     height: 3px;
     background-color: var(--color-primary-yellow);
     transform: translateY(-50%);
@@ -175,9 +175,9 @@
     content: "";
     position: absolute;
     top: 50%;
-    left: calc(100% + 44px);
-    width: 9px;
-    height: 9px;
+    left: calc(100% + 49px);
+    width: 10px;
+    height: 10px;
     background-color: var(--color-primary-yellow);
     transform: translateY(-50%) rotate(45deg);
     animation: selection-in 180ms ease-out;
@@ -193,6 +193,7 @@
     border-radius: 16px;
     object-fit: cover;
     outline: 1px solid rgb(48 49 49 / 8%);
+    background-color: var(--color-light-gray);
     transition: opacity 160ms ease, transform 160ms ease;
 }
 

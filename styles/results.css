@@ -17,6 +17,8 @@
 
 
 .result-content {
+    position: relative;
+    z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -95,7 +97,8 @@
     position: absolute;
     inset: 0 0 auto;
     display: none;
-    height: 220px;
+    z-index: 1;
+    height: 300px;
     overflow: hidden;
     pointer-events: none;
 }
@@ -109,15 +112,15 @@
 .confetti-piece {
     position: absolute;
     top: -24px;
-    width: 8px;
-    height: 18px;
+    width: 10px;
+    height: 22px;
     background-color: var(--confetti-color);
     opacity: 0;
 }
 
 
 .winner-screen.is-entering[data-theme='coding']:not(.is-draw) .confetti-piece {
-    animation: confetti-fall 1200ms ease-out both;
+    animation: confetti-fall 1500ms ease-out both;
 }
 
 
@@ -171,7 +174,7 @@
 
     100% {
         opacity: 0;
-        transform: translateY(210px) rotate(540deg);
+        transform: translateY(290px) rotate(540deg);
     }
 }
 

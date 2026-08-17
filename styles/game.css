@@ -1,5 +1,4 @@
 /* Game board, cards, score header and exit dialog. */
-/* Game board */
 .game-screen {
     --game-background: #303131;
     --game-header-surface: rgb(134 233 214 / 20%);
@@ -8,7 +7,7 @@
     --game-card-ratio: 1;
     --game-column-gap: 16px;
     --game-row-gap: 16px;
-    --game-card-radius: 10px;
+    --game-card-radius: 12px;
     --game-card-outline: rgb(255 255 255 / 18%);
     min-height: 100vh;
     padding: 38px 110px 64px;
@@ -181,8 +180,7 @@
     width: 100%;
     height: 100%;
     border-radius: inherit;
-    object-fit: cover;
-    object-position: center;
+    object-fit: fill;
 }
 
 
@@ -203,7 +201,7 @@
     --game-card-max-width: 120px;
     --game-card-width: var(--game-card-max-width);
     --game-card-ratio: 1;
-    --game-card-radius: 8px;
+    --game-card-radius: 12px;
     --game-card-outline: rgb(77 213 188 / 45%);
 }
 
@@ -218,12 +216,12 @@
 .game-screen[data-theme='gaming'] {
     --game-background: #294f60;
     --game-header-surface: rgb(253 150 201 / 20%);
-    --game-card-max-width: 104px;
+    --game-card-max-width: 105px;
     --game-card-width: var(--game-card-max-width);
     --game-card-ratio: 13 / 15;
     --game-column-gap: 6px;
     --game-row-gap: 6px;
-    --game-card-radius: 10px;
+    --game-card-radius: 12px;
     --game-card-outline: #ff31a0;
 }
 
@@ -236,7 +234,7 @@
     --game-card-ratio: 6 / 5;
     --game-column-gap: 16px;
     --game-row-gap: 16px;
-    --game-card-radius: 10px;
+    --game-card-radius: 12px;
     --game-card-outline: rgb(37 132 160 / 50%);
     color: var(--color-primary-dark);
 }
@@ -251,12 +249,12 @@
 .game-screen[data-theme='foods'] {
     --game-background: #ffffff;
     --game-header-surface: #f0e5d9;
-    --game-card-max-width: 122px;
+    --game-card-max-width: 120px;
     --game-card-width: var(--game-card-max-width);
     --game-card-ratio: 1;
     --game-column-gap: 16px;
     --game-row-gap: 14px;
-    --game-card-radius: 8px;
+    --game-card-radius: 12px;
     --game-card-outline: rgb(255 127 39 / 45%);
     color: var(--color-primary-dark);
 }

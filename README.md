@@ -1,20 +1,20 @@
 # Memory Game
 
-A two-player memory game created as a Developer Akademie project.
+Two-player Memory game created as a Developer Akademie project from the supplied Figma design and project checklist.
 
 ## Features
 
-- Four visual themes: Code Vibes, Gaming, DA Projects and Foods
-- Blue and Orange player selection
+- Four themes: Code Vibes, Gaming, DA Projects and Foods
+- Theme preview changes on hover and keyboard focus
+- Blue or Orange starting player
 - Three board sizes: 4×4, 4×6 and 6×6
-- Live theme preview on hover and keyboard focus
-- Disabled Start button until all required settings are selected
-- Animated card flipping and matching logic
+- Start button stays disabled until every required setting is selected
+- Animated card flips and matching logic
 - Score tracking and automatic player switching
 - Exit-game confirmation
-- Animated Game Over, Winner and Draw screens
-- Confetti for the Code Vibes winner screen
-- Rematch and Back to Settings actions
+- Animated Game Over and Winner/Draw transition
+- Confetti on the Code Vibes winner screen
+- Back to Settings and optional Rematch actions
 
 ## Technologies
 
@@ -22,8 +22,12 @@ A two-player memory game created as a Developer Akademie project.
 - CSS3
 - TypeScript
 
-The project source is written in TypeScript. Generated JavaScript is created locally in the
-`build/` directory and is intentionally excluded from Git.
+## TypeScript workflow
+
+The source code is written **only in TypeScript** inside `src/ts/`.
+Generated JavaScript is written to `build/` by the TypeScript compiler and is intentionally excluded from Git with `.gitignore`.
+
+Do not edit generated JavaScript manually.
 
 ## Run locally
 
@@ -35,10 +39,9 @@ The project source is written in TypeScript. Generated JavaScript is created loc
    ```
 
 3. Start `index.html` with Live Server.
-4. Keep the TypeScript compiler running while developing.
+4. Keep `tsc --watch` running while developing.
 
-The browser loads `build/main.js`, which is generated automatically from the files in
-`src/ts/`.
+The browser loads `build/main.js`, which is generated from the files in `src/ts/`.
 
 ## Project structure
 
@@ -66,13 +69,8 @@ Memory Game/
 │   ├── settings.css
 │   ├── style.css
 │   └── variables.css
+├── .gitignore
 ├── index.html
 ├── README.md
 └── tsconfig.json
 ```
-
-## Development notes
-
-Only edit the TypeScript files in `src/ts/`. Do not edit generated JavaScript in `build/`.
-The `build/` directory is ignored by Git so the repository contains only the TypeScript
-source code.

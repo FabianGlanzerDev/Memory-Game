@@ -79,6 +79,20 @@ function bindSummary(inputName: string, outputId: string): void {
 
 
 /**
+ * Preloads every theme preview to avoid a delay on first hover.
+ * @returns Nothing.
+ */
+function preloadThemePreviews(): void {
+    Object.values(THEME_PREVIEWS).forEach((source) => {
+        const image = new Image();
+
+        image.src = source;
+    });
+}
+
+
+
+/**
  * Displays the preview image that belongs to one theme option.
  * @param input - The theme option whose preview should be shown.
  * @param preview - The preview image element.
@@ -242,6 +256,7 @@ export function getGameSettings(): GameSettings {
  * @returns Nothing.
  */
 export function initSettings(): void {
+    preloadThemePreviews();
     bindSummary('theme', 'selected-theme');
     bindSummary('player', 'selected-player');
     bindSummary('board-size', 'selected-board-size');
