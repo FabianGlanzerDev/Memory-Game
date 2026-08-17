@@ -131,6 +131,38 @@
                 </div>
             </div>
         </section>
+
+
+        <section class="game-screen hidden" id="game-screen" data-theme="coding" data-size="16">
+            <header class="game-header">
+                <div class="score-panel" aria-label="Current score">
+                    <span class="score-badge score-blue">
+                        <span class="score-dot" aria-hidden="true"></span>
+                        Blue
+                        <strong id="blue-score">0</strong>
+                    </span>
+
+                    <span class="score-badge score-orange">
+                        <span class="score-dot" aria-hidden="true"></span>
+                        Orange
+                        <strong id="orange-score">0</strong>
+                    </span>
+                </div>
+
+                <div class="current-player-box">
+                    <span>Current player:</span>
+                    <span class="current-player-indicator" id="current-player-indicator" data-player="blue" aria-hidden="true"></span>
+                    <strong id="current-player">Blue</strong>
+                </div>
+
+                <button class="exit-button" id="exit-button" type="button">
+                    <span aria-hidden="true">↪</span>
+                    Exit game
+                </button>
+            </header>
+
+            <div class="game-board" id="game-board" aria-label="Memory game board"></div>
+        </section>
     </main>
 </body>
 
