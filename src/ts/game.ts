@@ -3,7 +3,7 @@ import { renderBoard, resetCardInteraction } from './cards.js';
 import { resetResultFlow } from './results.js';
 import { resetPlayerState } from './scoring.js';
 import { getGameSettings, showSettings } from './settings.js';
-import { scrollToScreenTop } from './navigation.js';
+import { focusWithoutScroll, showScreen } from './navigation.js';
 
 
 /**
@@ -29,7 +29,9 @@ function prepareGameScreen(settings: GameSettings): void {
  * @returns Nothing.
  */
 function focusFirstCard(): void {
-    document.querySelector<HTMLButtonElement>('.memory-card')?.focus({ preventScroll: true });
+    const firstCard = document.querySelector<HTMLButtonElement>('.memory-card');
+
+    focusWithoutScroll(firstCard);
 }
 
 
@@ -41,9 +43,7 @@ function focusFirstCard(): void {
 export function startGame(): void {
     resetResultFlow();
     prepareGameScreen(getGameSettings());
-    document.getElementById('settings-screen')?.classList.add('hidden');
-    document.getElementById('game-screen')?.classList.remove('hidden');
-    scrollToScreenTop();
+    showScreen('game-screen');
     focusFirstCard();
 }
 
@@ -98,7 +98,6 @@ function exitGame(): void {
     resetCardInteraction();
     resetResultFlow();
     showSettings();
-    document.querySelector<HTMLInputElement>('input[name="theme"]:checked')?.focus({ preventScroll: true });
 }
 
 

@@ -1,4 +1,4 @@
-import { createCardPaths, GAME_TIMING } from './config.js';
+import { createCardPaths, GAME_TIMING, THEME_BACKS } from './config.js';
 import type { GameSettings, MemoryCardData } from './config.js';
 import { addPoint, switchPlayer } from './scoring.js';
 import { scheduleGameOver } from './results.js';
@@ -70,12 +70,13 @@ function createCardFace(className: string): HTMLSpanElement {
 
 
 /**
- * Creates the image side of a memory card.
- * @param image - The card front image path.
- * @returns The completed front face element.
+ * Creates one card face that contains a single image.
+ * @param className - The CSS class of the card face.
+ * @param image - The image shown on the card face.
+ * @returns The completed image face.
  */
-function createFrontFace(image: string): HTMLSpanElement {
-    const face = createCardFace('memory-card-front');
+function createImageFace(className: string, image: string): HTMLSpanElement {
+    const face = createCardFace(className);
     const img = document.createElement('img');
 
     img.src = image;
@@ -126,13 +127,13 @@ function configureCard(card: HTMLButtonElement, data: MemoryCardData, index: num
  * @param index - The zero-based position in the board.
  * @returns The completed memory card button.
  */
-function createMemoryCard(data: MemoryCardData, index: number): HTMLButtonElement {
+function createMemoryCard(data: MemoryCardData, index: number, backImage: string): HTMLButtonElement {
     const card = document.createElement('button');
     const inner = document.createElement('span');
 
     configureCard(card, data, index);
     inner.className = 'memory-card-inner';
-    inner.append(createCardFace('memory-card-back'), createFrontFace(data.image));
+    inner.append(createImageFace('memory-card-back', backImage), createImageFace('memory-card-front', data.image));
     card.append(inner);
     card.addEventListener('click', () => handleCardClick(card));
     return card;
@@ -145,10 +146,10 @@ function createMemoryCard(data: MemoryCardData, index: number): HTMLButtonElemen
  * @param deck - The shuffled memory deck.
  * @returns A fragment containing all card buttons.
  */
-function createBoardFragment(deck: MemoryCardData[]): DocumentFragment {
+function createBoardFragment(deck: MemoryCardData[], backImage: string): DocumentFragment {
     const fragment = document.createDocumentFragment();
 
-    deck.forEach((data, index) => fragment.append(createMemoryCard(data, index)));
+    deck.forEach((data, index) => fragment.append(createMemoryCard(data, index, backImage)));
     return fragment;
 }
 
@@ -164,7 +165,9 @@ export function renderBoard(settings: GameSettings): void {
     const columns = settings.cardCount === 16 ? 4 : 6;
 
     if (!board) return;
-    board.replaceChildren(createBoardFragment(createDeck(settings)));
+    const backImage = THEME_BACKS[settings.theme];
+
+    board.replaceChildren(createBoardFragment(createDeck(settings), backImage));
     board.style.setProperty('--board-columns', String(columns));
 }
 

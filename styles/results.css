@@ -91,31 +91,91 @@
 }
 
 
-.winner-screen::before {
-    content: '';
+.confetti-layer {
     position: absolute;
-    top: 0;
-    left: 50%;
+    inset: 0 0 auto;
     display: none;
-    width: min(900px, 100%);
-    height: 150px;
-    transform: translateX(-50%);
-    background:
-        radial-gradient(circle at 8% 20%, #ff922f 0 3px, transparent 4px),
-        radial-gradient(circle at 18% 45%, #24aaf2 0 3px, transparent 4px),
-        radial-gradient(circle at 29% 18%, #f4df42 0 3px, transparent 4px),
-        radial-gradient(circle at 42% 55%, #ef3c51 0 3px, transparent 4px),
-        radial-gradient(circle at 56% 23%, #4dd5bc 0 3px, transparent 4px),
-        radial-gradient(circle at 68% 48%, #ff922f 0 3px, transparent 4px),
-        radial-gradient(circle at 81% 20%, #24aaf2 0 3px, transparent 4px),
-        radial-gradient(circle at 92% 44%, #ef3c51 0 3px, transparent 4px);
-    opacity: 0.95;
+    height: 220px;
+    overflow: hidden;
+    pointer-events: none;
 }
 
 
-.winner-screen[data-theme='coding']:not(.is-draw)::before {
+.winner-screen[data-theme='coding']:not(.is-draw) .confetti-layer {
     display: block;
 }
+
+
+.confetti-piece {
+    position: absolute;
+    top: -24px;
+    width: 8px;
+    height: 18px;
+    background-color: var(--confetti-color);
+    opacity: 0;
+}
+
+
+.winner-screen.is-entering[data-theme='coding']:not(.is-draw) .confetti-piece {
+    animation: confetti-fall 1200ms ease-out both;
+}
+
+
+.confetti-piece:nth-child(4n + 1) {
+    --confetti-color: #ff922f;
+}
+
+
+.confetti-piece:nth-child(4n + 2) {
+    --confetti-color: #24aaf2;
+}
+
+
+.confetti-piece:nth-child(4n + 3) {
+    --confetti-color: #f4df42;
+}
+
+
+.confetti-piece:nth-child(4n) {
+    --confetti-color: #4dd5bc;
+}
+
+
+.confetti-piece:nth-child(1) { left: 6%; animation-delay: 0ms; }
+.confetti-piece:nth-child(2) { left: 12%; animation-delay: 80ms; }
+.confetti-piece:nth-child(3) { left: 18%; animation-delay: 30ms; }
+.confetti-piece:nth-child(4) { left: 24%; animation-delay: 140ms; }
+.confetti-piece:nth-child(5) { left: 30%; animation-delay: 20ms; }
+.confetti-piece:nth-child(6) { left: 36%; animation-delay: 100ms; }
+.confetti-piece:nth-child(7) { left: 42%; animation-delay: 180ms; }
+.confetti-piece:nth-child(8) { left: 48%; animation-delay: 50ms; }
+.confetti-piece:nth-child(9) { left: 54%; animation-delay: 120ms; }
+.confetti-piece:nth-child(10) { left: 60%; animation-delay: 10ms; }
+.confetti-piece:nth-child(11) { left: 66%; animation-delay: 160ms; }
+.confetti-piece:nth-child(12) { left: 72%; animation-delay: 60ms; }
+.confetti-piece:nth-child(13) { left: 78%; animation-delay: 130ms; }
+.confetti-piece:nth-child(14) { left: 84%; animation-delay: 40ms; }
+.confetti-piece:nth-child(15) { left: 90%; animation-delay: 190ms; }
+.confetti-piece:nth-child(16) { left: 95%; animation-delay: 90ms; }
+
+
+@keyframes confetti-fall {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) rotate(0deg);
+    }
+
+    15% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(210px) rotate(540deg);
+    }
+}
+
+
 
 
 .winner-kicker {

@@ -24,6 +24,14 @@ export const THEME_PREVIEWS: Record<Theme, string> = {
 };
 
 
+export const THEME_BACKS: Record<Theme, string> = {
+    coding: './assets/img/cards/coding-back.png',
+    gaming: './assets/img/cards/gaming-back.png',
+    projects: './assets/img/cards/projects-back.png',
+    foods: './assets/img/cards/foods-back.png'
+};
+
+
 export const GAME_TIMING = {
     mismatchDelay: 850,
     gameOverDelay: 550,

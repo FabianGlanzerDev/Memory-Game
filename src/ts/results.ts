@@ -1,7 +1,7 @@
 import { GAME_TIMING } from './config.js';
 import type { Player } from './config.js';
 import { getScores } from './scoring.js';
-import { scrollToScreenTop } from './navigation.js';
+import { showScreen } from './navigation.js';
 import { getGameSettings } from './settings.js';
 
 
@@ -138,12 +138,10 @@ function completeWinnerTransition(): void {
     const gameOver = document.getElementById('game-over-screen');
     const winnerScreen = document.getElementById('winner-screen');
 
-    gameOver?.classList.add('hidden');
     gameOver?.classList.remove('is-leaving');
     updateWinnerContent(getWinner());
-    winnerScreen?.classList.remove('hidden');
+    showScreen('winner-screen');
     winnerScreen?.classList.add('is-entering');
-    scrollToScreenTop();
     resultTimeout = undefined;
 }
 
@@ -174,10 +172,8 @@ function showGameOver(): void {
     syncResultTheme(settings.theme);
     updateGameOverTitle(settings.theme);
     updateFinalScore();
-    document.getElementById('game-screen')?.classList.add('hidden');
-    gameOver?.classList.remove('hidden');
+    showScreen('game-over-screen');
     gameOver?.classList.add('is-entering');
-    scrollToScreenTop();
     resultTimeout = window.setTimeout(beginWinnerTransition, GAME_TIMING.winnerDelay);
 }
 

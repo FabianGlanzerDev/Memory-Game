@@ -1,6 +1,6 @@
 import { THEME_PREVIEWS } from './config.js';
 import type { CardCount, GameSettings, Player, Theme } from './config.js';
-import { scrollToScreenTop } from './navigation.js';
+import { focusWithoutScroll, showScreen } from './navigation.js';
 
 
 const DEFAULT_THEME: Theme = 'coding';
@@ -10,16 +10,14 @@ const REQUIRED_SETTINGS = ['theme', 'player', 'board-size'] as const;
 
 
 /**
- * Shows the settings screen and hides all other application screens.
+ * Shows the settings screen and restores focus to the selected theme.
  * @returns Nothing.
  */
 export function showSettings(): void {
-    document.getElementById('home-screen')?.classList.add('hidden');
-    document.getElementById('game-screen')?.classList.add('hidden');
-    document.getElementById('game-over-screen')?.classList.add('hidden');
-    document.getElementById('winner-screen')?.classList.add('hidden');
-    document.getElementById('settings-screen')?.classList.remove('hidden');
-    scrollToScreenTop();
+    showScreen('settings-screen');
+    const selectedTheme = document.querySelector<HTMLInputElement>('input[name="theme"]:checked');
+
+    focusWithoutScroll(selectedTheme);
 }
 
 
@@ -96,29 +94,47 @@ function showThemePreview(input: HTMLInputElement, preview: HTMLImageElement): v
 
 
 /**
- * Updates the theme preview only after the theme was selected.
+ * Restores the preview of the currently selected theme.
+ * @param preview - The preview image element.
+ * @returns Nothing.
+ */
+function restoreSelectedPreview(preview: HTMLImageElement): void {
+    const selected = document.querySelector<HTMLInputElement>('input[name="theme"]:checked');
+
+    if (selected) showThemePreview(selected, preview);
+}
+
+
+
+/**
+ * Adds hover, focus and selection preview behavior to one theme option.
  * @param input - The theme radio input.
  * @param preview - The preview image element.
  * @returns Nothing.
  */
 function bindThemePreview(input: HTMLInputElement, preview: HTMLImageElement): void {
+    const label = input.closest('label');
+
+    label?.addEventListener('mouseenter', () => showThemePreview(input, preview));
+    label?.addEventListener('mouseleave', () => restoreSelectedPreview(preview));
+    input.addEventListener('focus', () => showThemePreview(input, preview));
+    input.addEventListener('blur', () => restoreSelectedPreview(preview));
     input.addEventListener('change', () => showThemePreview(input, preview));
 }
 
 
 
 /**
- * Initializes click-based theme preview behavior.
+ * Initializes live theme previews for pointer and keyboard interaction.
  * @returns Nothing.
  */
 function initThemePreview(): void {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[name="theme"]');
     const preview = document.querySelector<HTMLImageElement>('#theme-preview');
-    const selected = document.querySelector<HTMLInputElement>('input[name="theme"]:checked');
 
     if (!preview) return;
     inputs.forEach((input) => bindThemePreview(input, preview));
-    if (selected) showThemePreview(selected, preview);
+    restoreSelectedPreview(preview);
 }
 
 
