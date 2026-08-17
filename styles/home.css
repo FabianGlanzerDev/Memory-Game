@@ -44,6 +44,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
+    gap: 8px;
     min-height: 50px;
     margin: 40px auto 0;
     padding: 8px 16px;
@@ -53,21 +54,61 @@
     font-size: 40px;
     font-weight: 700;
     cursor: pointer;
+    transition: background-color 180ms ease, transform 180ms ease;
 }
 
 
 
-.play-button:hover,
-.start-button:hover {
-    filter: brightness(0.96);
+.play-button-icon {
+    width: 44px;
+    height: 32px;
+    object-fit: contain;
+    transform-origin: center;
+    transition: transform 180ms ease;
 }
 
 
 
-.play-button:focus-visible,
-.start-button:focus-visible {
-    outline: 3px solid currentColor;
-    outline-offset: 4px;
+.play-button-arrow {
+    display: inline-block;
+    transition: transform 180ms ease;
+}
+
+
+
+.play-button:hover {
+    background-color: var(--color-primary-yellow);
+    transform: scale(1.05);
+}
+
+
+
+.play-button:hover .play-button-icon {
+    transform: rotate(-18deg);
+}
+
+
+
+.play-button:hover .play-button-arrow {
+    transform: translateX(10px);
+}
+
+
+
+.play-button:active {
+    transform: scale(1.02);
+}
+
+
+.play-button:active .play-button-icon {
+    transform: rotate(-18deg) scale(0.96);
+}
+
+
+
+.play-button:focus-visible {
+    outline: 3px solid var(--color-white);
+    outline-offset: 5px;
 }
 
 
@@ -173,5 +214,12 @@
 @media (prefers-reduced-motion: reduce) {
     .controller {
         animation: none;
+    }
+
+
+    .play-button,
+    .play-button-icon,
+    .play-button-arrow {
+        transition: none;
     }
 }

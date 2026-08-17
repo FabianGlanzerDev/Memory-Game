@@ -9,7 +9,8 @@ import { initSettings, showSettings } from './settings.js';
 function init(): void {
     document.getElementById('play-button')?.addEventListener('click', showSettings);
     document.getElementById('start-button')?.addEventListener('click', startGame);
-    document.getElementById('new-game-button')?.addEventListener('click', startGame);
+    document.getElementById('back-to-settings-button')?.addEventListener('click', showSettings);
+    document.getElementById('rematch-button')?.addEventListener('click', startGame);
     initExitDialog();
     initSettings();
 }

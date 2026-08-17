@@ -9,6 +9,3 @@ export function scrollToScreenTop() {
         behavior: 'auto'
     });
 }
-
-
-

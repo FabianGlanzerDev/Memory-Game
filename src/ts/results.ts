@@ -24,6 +24,17 @@ function clearResultTimeout(): void {
 
 
 /**
+ * Clears transition classes from both result screens.
+ * @returns Nothing.
+ */
+function clearResultAnimations(): void {
+    document.getElementById('game-over-screen')?.classList.remove('is-entering', 'is-leaving');
+    document.getElementById('winner-screen')?.classList.remove('is-entering', 'is-leaving');
+}
+
+
+
+/**
  * Hides both result screens.
  * @returns Nothing.
  */
@@ -88,7 +99,7 @@ function getWinner(): GameResult {
 
 
 /**
- * Selects the result icon that matches the Figma theme.
+ * Selects the result icon that matches the active theme.
  * @param winner - The current game result.
  * @returns The icon identifier used by the result screen.
  */
@@ -120,15 +131,34 @@ function updateWinnerContent(winner: GameResult): void {
 
 
 /**
- * Replaces the game-over screen with the winner or draw screen.
+ * Completes the animated change from game over to the final result.
  * @returns Nothing.
  */
-function showWinnerScreen(): void {
-    document.getElementById('game-over-screen')?.classList.add('hidden');
+function completeWinnerTransition(): void {
+    const gameOver = document.getElementById('game-over-screen');
+    const winnerScreen = document.getElementById('winner-screen');
+
+    gameOver?.classList.add('hidden');
+    gameOver?.classList.remove('is-leaving');
     updateWinnerContent(getWinner());
-    document.getElementById('winner-screen')?.classList.remove('hidden');
+    winnerScreen?.classList.remove('hidden');
+    winnerScreen?.classList.add('is-entering');
     scrollToScreenTop();
     resultTimeout = undefined;
+}
+
+
+
+/**
+ * Starts the visible transition from score view to winner or draw view.
+ * @returns Nothing.
+ */
+function beginWinnerTransition(): void {
+    const gameOver = document.getElementById('game-over-screen');
+
+    gameOver?.classList.remove('is-entering');
+    gameOver?.classList.add('is-leaving');
+    resultTimeout = window.setTimeout(completeWinnerTransition, GAME_TIMING.resultTransition);
 }
 
 
@@ -139,14 +169,16 @@ function showWinnerScreen(): void {
  */
 function showGameOver(): void {
     const settings = getGameSettings();
+    const gameOver = document.getElementById('game-over-screen');
 
     syncResultTheme(settings.theme);
     updateGameOverTitle(settings.theme);
     updateFinalScore();
     document.getElementById('game-screen')?.classList.add('hidden');
-    document.getElementById('game-over-screen')?.classList.remove('hidden');
+    gameOver?.classList.remove('hidden');
+    gameOver?.classList.add('is-entering');
     scrollToScreenTop();
-    resultTimeout = window.setTimeout(showWinnerScreen, GAME_TIMING.winnerDelay);
+    resultTimeout = window.setTimeout(beginWinnerTransition, GAME_TIMING.winnerDelay);
 }
 
 
@@ -163,13 +195,11 @@ export function scheduleGameOver(): void {
 
 
 /**
- * Resets all result screens and pending result timers.
+ * Resets all result screens, animations and pending result timers.
  * @returns Nothing.
  */
 export function resetResultFlow(): void {
     clearResultTimeout();
+    clearResultAnimations();
     hideResultScreens();
 }
-
-
-

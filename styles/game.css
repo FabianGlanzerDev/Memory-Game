@@ -1,4 +1,5 @@
 /* Game board, cards, score header and exit dialog. */
+/* Game board */
 .game-screen {
     --game-background: #303131;
     --game-header-surface: rgb(134 233 214 / 20%);
@@ -8,6 +9,8 @@
     --game-column-gap: 16px;
     --game-row-gap: 16px;
     --game-card-image: url('../assets/img/cards/coding-back.png');
+    --game-card-radius: 10px;
+    --game-card-outline: rgb(255 255 255 / 18%);
     min-height: 100vh;
     padding: 38px 110px 64px;
     background-color: var(--game-background);
@@ -125,7 +128,9 @@
 .memory-card {
     width: var(--game-card-width);
     aspect-ratio: var(--game-card-ratio);
+    overflow: hidden;
     border: 0;
+    border-radius: var(--game-card-radius);
     background: transparent;
     cursor: pointer;
     perspective: 1000px;
@@ -137,6 +142,7 @@
     display: block;
     width: 100%;
     height: 100%;
+    border-radius: inherit;
     transition: transform 420ms ease;
     transform-style: preserve-3d;
 }
@@ -153,6 +159,8 @@
     inset: 0;
     display: block;
     overflow: hidden;
+    border-radius: inherit;
+    box-shadow: inset 0 0 0 1px var(--game-card-outline);
     backface-visibility: hidden;
 }
 
@@ -161,7 +169,7 @@
     background-image: var(--game-card-image);
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 100% 100%;
+    background-size: cover;
 }
 
 
@@ -174,7 +182,8 @@
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: fill;
+    border-radius: inherit;
+    object-fit: cover;
 }
 
 
@@ -196,6 +205,8 @@
     --game-card-width: var(--game-card-max-width);
     --game-card-ratio: 1;
     --game-card-image: url('../assets/img/cards/coding-back.png');
+    --game-card-radius: 8px;
+    --game-card-outline: rgb(77 213 188 / 45%);
 }
 
 
@@ -209,12 +220,14 @@
 .game-screen[data-theme='gaming'] {
     --game-background: #294f60;
     --game-header-surface: rgb(253 150 201 / 20%);
-    --game-card-max-width: 105px;
+    --game-card-max-width: 104px;
     --game-card-width: var(--game-card-max-width);
-    --game-card-ratio: 105 / 120;
+    --game-card-ratio: 13 / 15;
     --game-column-gap: 6px;
     --game-row-gap: 6px;
     --game-card-image: url('../assets/img/cards/gaming-back.png');
+    --game-card-radius: 10px;
+    --game-card-outline: #ff31a0;
 }
 
 
@@ -227,6 +240,8 @@
     --game-column-gap: 16px;
     --game-row-gap: 16px;
     --game-card-image: url('../assets/img/cards/projects-back.png');
+    --game-card-radius: 10px;
+    --game-card-outline: rgb(37 132 160 / 50%);
     color: var(--color-primary-dark);
 }
 
@@ -246,6 +261,8 @@
     --game-column-gap: 16px;
     --game-row-gap: 14px;
     --game-card-image: url('../assets/img/cards/foods-back.png');
+    --game-card-radius: 8px;
+    --game-card-outline: rgb(255 127 39 / 45%);
     color: var(--color-primary-dark);
 }
 

@@ -27,7 +27,8 @@ export const THEME_PREVIEWS: Record<Theme, string> = {
 export const GAME_TIMING = {
     mismatchDelay: 850,
     gameOverDelay: 550,
-    winnerDelay: 1800
+    winnerDelay: 1450,
+    resultTransition: 380
 } as const;
 
 
@@ -56,6 +57,3 @@ export function createCardPaths(theme: Theme): string[] {
         (_, index) => `./assets/img/cards/${theme}/front-${formatCardIndex(index + 1)}.png`
     );
 }
-
-
-

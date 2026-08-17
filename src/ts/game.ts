@@ -2,7 +2,7 @@ import type { GameSettings } from './config.js';
 import { renderBoard, resetCardInteraction } from './cards.js';
 import { resetResultFlow } from './results.js';
 import { resetPlayerState } from './scoring.js';
-import { getGameSettings } from './settings.js';
+import { getGameSettings, showSettings } from './settings.js';
 import { scrollToScreenTop } from './navigation.js';
 
 
@@ -25,19 +25,17 @@ function prepareGameScreen(settings: GameSettings): void {
 
 
 /**
- * Moves keyboard focus to the first card of a new game.
+ * Moves keyboard focus to the first card without changing scroll position.
  * @returns Nothing.
  */
 function focusFirstCard(): void {
-    document.querySelector<HTMLButtonElement>('.memory-card')?.focus({
-        preventScroll: true
-    });
+    document.querySelector<HTMLButtonElement>('.memory-card')?.focus({ preventScroll: true });
 }
 
 
 
 /**
- * Starts a fresh game with the current settings.
+ * Starts a fresh game with the currently selected settings.
  * @returns Nothing.
  */
 export function startGame(): void {
@@ -92,19 +90,15 @@ function hideExitDialog(): void {
 
 
 /**
- * Leaves the active game and returns to the settings screen.
+ * Leaves the active game and returns to the current settings.
  * @returns Nothing.
  */
 function exitGame(): void {
     setExitDialogVisibility(false);
     resetCardInteraction();
     resetResultFlow();
-    document.getElementById('game-screen')?.classList.add('hidden');
-    document.getElementById('settings-screen')?.classList.remove('hidden');
-    scrollToScreenTop();
-    document.querySelector<HTMLInputElement>('input[name="theme"]:checked')?.focus({
-        preventScroll: true
-    });
+    showSettings();
+    document.querySelector<HTMLInputElement>('input[name="theme"]:checked')?.focus({ preventScroll: true });
 }
 
 
@@ -144,6 +138,3 @@ export function initExitDialog(): void {
     document.getElementById('exit-modal')?.addEventListener('click', handleExitDialogClick);
     document.addEventListener('keydown', handleEscapeKey);
 }
-
-
-

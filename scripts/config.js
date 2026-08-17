@@ -7,7 +7,8 @@ export const THEME_PREVIEWS = {
 export const GAME_TIMING = {
     mismatchDelay: 850,
     gameOverDelay: 550,
-    winnerDelay: 1800
+    winnerDelay: 1450,
+    resultTransition: 380
 };
 const MAX_CARD_PAIRS = 18;
 /**
@@ -18,9 +19,6 @@ const MAX_CARD_PAIRS = 18;
 function formatCardIndex(index) {
     return index < 10 ? `0${index}` : String(index);
 }
-
-
-
 /**
  * Creates all available front image paths for a theme.
  * @param theme - The selected memory theme.
@@ -29,6 +27,3 @@ function formatCardIndex(index) {
 export function createCardPaths(theme) {
     return Array.from({ length: MAX_CARD_PAIRS }, (_, index) => `./assets/img/cards/${theme}/front-${formatCardIndex(index + 1)}.png`);
 }
-
-
-

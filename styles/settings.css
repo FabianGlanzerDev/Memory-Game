@@ -91,7 +91,7 @@
     align-items: center;
     gap: 10px;
     margin-bottom: 12px;
-    font-family: var(--font-display);
+    font-family: var(--font-body);
     font-size: 20px;
     font-weight: 700;
 }
@@ -113,8 +113,18 @@
     min-height: 24px;
     margin-left: 48px;
     padding-left: 34px;
+    font-family: var(--font-body);
     font-size: 16px;
+    font-weight: 400;
     cursor: pointer;
+    transition: transform 160ms ease, color 160ms ease;
+}
+
+
+
+.settings-group label:hover {
+    color: #555757;
+    transform: translateX(4px);
 }
 
 
@@ -174,6 +184,7 @@
     margin-left: auto;
     border-radius: 16px;
     object-fit: cover;
+    transition: opacity 160ms ease, transform 160ms ease;
 }
 
 
@@ -193,7 +204,9 @@
 
 .settings-summary > span:not(.summary-divider) {
     flex: 1 1 auto;
+    font-family: var(--font-body);
     font-size: 14px;
+    font-weight: 400;
     text-align: center;
 }
 
@@ -229,6 +242,7 @@
     font-size: 18px;
     font-weight: 700;
     cursor: pointer;
+    transition: transform 160ms ease, filter 160ms ease;
 }
 
 
@@ -236,6 +250,35 @@
 .start-button img {
     width: 36px;
     height: 36px;
+}
+
+
+
+.start-button:not(:disabled):hover {
+    filter: brightness(0.94);
+    transform: translateY(-2px);
+}
+
+
+
+.start-button:disabled {
+    background-color: #dedede;
+    color: #8a8a8a;
+    cursor: not-allowed;
+}
+
+
+
+.start-button:disabled img {
+    filter: grayscale(1);
+    opacity: 0.45;
+}
+
+
+
+.start-button:focus-visible {
+    outline: 3px solid var(--color-board-blue);
+    outline-offset: 4px;
 }
 
 @keyframes selection-in {
@@ -365,5 +408,12 @@
     .settings-group label:has(input:checked)::after,
     .settings-summary-value.is-updating {
         animation: none;
+    }
+
+
+    .settings-group label,
+    .theme-preview,
+    .start-button {
+        transition: none;
     }
 }

@@ -1,7 +1,7 @@
 import { renderBoard, resetCardInteraction } from './cards.js';
 import { resetResultFlow } from './results.js';
 import { resetPlayerState } from './scoring.js';
-import { getGameSettings } from './settings.js';
+import { getGameSettings, showSettings } from './settings.js';
 import { scrollToScreenTop } from './navigation.js';
 /**
  * Prepares the game screen for a fresh round.
@@ -18,24 +18,16 @@ function prepareGameScreen(settings) {
     resetPlayerState(settings.player);
     renderBoard(settings);
 }
-
-
-
 /**
- * Moves keyboard focus to the first card of a new game.
+ * Moves keyboard focus to the first card without changing scroll position.
  * @returns Nothing.
  */
 function focusFirstCard() {
     var _a;
-    (_a = document.querySelector('.memory-card')) === null || _a === void 0 ? void 0 : _a.focus({
-        preventScroll: true
-    });
+    (_a = document.querySelector('.memory-card')) === null || _a === void 0 ? void 0 : _a.focus({ preventScroll: true });
 }
-
-
-
 /**
- * Starts a fresh game with the current settings.
+ * Starts a fresh game with the currently selected settings.
  * @returns Nothing.
  */
 export function startGame() {
@@ -47,9 +39,6 @@ export function startGame() {
     scrollToScreenTop();
     focusFirstCard();
 }
-
-
-
 /**
  * Shows or hides the exit confirmation dialog.
  * @param isVisible - Whether the dialog should be visible.
@@ -66,9 +55,6 @@ function setExitDialogVisibility(isVisible) {
     if (gameScreen)
         gameScreen.inert = isVisible;
 }
-
-
-
 /**
  * Opens the exit confirmation dialog.
  * @returns Nothing.
@@ -78,9 +64,6 @@ function showExitDialog() {
     setExitDialogVisibility(true);
     (_a = document.getElementById('back-to-game-button')) === null || _a === void 0 ? void 0 : _a.focus();
 }
-
-
-
 /**
  * Closes the exit dialog and returns focus to the exit button.
  * @returns Nothing.
@@ -90,28 +73,18 @@ function hideExitDialog() {
     setExitDialogVisibility(false);
     (_a = document.getElementById('exit-button')) === null || _a === void 0 ? void 0 : _a.focus();
 }
-
-
-
 /**
- * Leaves the active game and returns to the settings screen.
+ * Leaves the active game and returns to the current settings.
  * @returns Nothing.
  */
 function exitGame() {
-    var _a, _b, _c;
+    var _a;
     setExitDialogVisibility(false);
     resetCardInteraction();
     resetResultFlow();
-    (_a = document.getElementById('game-screen')) === null || _a === void 0 ? void 0 : _a.classList.add('hidden');
-    (_b = document.getElementById('settings-screen')) === null || _b === void 0 ? void 0 : _b.classList.remove('hidden');
-    scrollToScreenTop();
-    (_c = document.querySelector('input[name="theme"]:checked')) === null || _c === void 0 ? void 0 : _c.focus({
-        preventScroll: true
-    });
+    showSettings();
+    (_a = document.querySelector('input[name="theme"]:checked')) === null || _a === void 0 ? void 0 : _a.focus({ preventScroll: true });
 }
-
-
-
 /**
  * Closes the exit dialog when its backdrop is clicked.
  * @param event - The click event from the dialog backdrop.
@@ -121,9 +94,6 @@ function handleExitDialogClick(event) {
     if (event.target === document.getElementById('exit-modal'))
         hideExitDialog();
 }
-
-
-
 /**
  * Closes the exit dialog when Escape is pressed while it is open.
  * @param event - The keyboard event from the document.
@@ -134,9 +104,6 @@ function handleEscapeKey(event) {
     if (event.key === 'Escape' && !(dialog === null || dialog === void 0 ? void 0 : dialog.classList.contains('hidden')))
         hideExitDialog();
 }
-
-
-
 /**
  * Initializes all exit-dialog event listeners.
  * @returns Nothing.
@@ -149,6 +116,3 @@ export function initExitDialog() {
     (_d = document.getElementById('exit-modal')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', handleExitDialogClick);
     document.addEventListener('keydown', handleEscapeKey);
 }
-
-
-

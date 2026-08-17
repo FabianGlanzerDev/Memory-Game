@@ -6,14 +6,18 @@ import { scrollToScreenTop } from './navigation.js';
 const DEFAULT_THEME: Theme = 'coding';
 const DEFAULT_PLAYER: Player = 'blue';
 const DEFAULT_CARD_COUNT: CardCount = 16;
+const REQUIRED_SETTINGS = ['theme', 'player', 'board-size'] as const;
 
 
 /**
- * Opens the settings screen from the home screen.
+ * Shows the settings screen and hides all other application screens.
  * @returns Nothing.
  */
 export function showSettings(): void {
     document.getElementById('home-screen')?.classList.add('hidden');
+    document.getElementById('game-screen')?.classList.add('hidden');
+    document.getElementById('game-over-screen')?.classList.add('hidden');
+    document.getElementById('winner-screen')?.classList.add('hidden');
     document.getElementById('settings-screen')?.classList.remove('hidden');
     scrollToScreenTop();
 }
@@ -77,15 +81,14 @@ function bindSummary(inputName: string, outputId: string): void {
 
 
 /**
- * Updates the preview image for the selected theme.
- * @param input - The changed theme radio input.
+ * Displays the preview image that belongs to one theme option.
+ * @param input - The theme option whose preview should be shown.
  * @param preview - The preview image element.
  * @returns Nothing.
  */
-function updateThemePreview(input: HTMLInputElement, preview: HTMLImageElement): void {
-    if (!input.checked) return;
-
+function showThemePreview(input: HTMLInputElement, preview: HTMLImageElement): void {
     const theme = parseTheme(input.value);
+
     preview.src = THEME_PREVIEWS[theme];
     preview.alt = `Preview of the ${getSettingLabel(input)}`;
 }
@@ -93,16 +96,29 @@ function updateThemePreview(input: HTMLInputElement, preview: HTMLImageElement):
 
 
 /**
- * Connects the theme radio buttons with the theme preview image.
+ * Updates the theme preview only after the theme was selected.
+ * @param input - The theme radio input.
+ * @param preview - The preview image element.
+ * @returns Nothing.
+ */
+function bindThemePreview(input: HTMLInputElement, preview: HTMLImageElement): void {
+    input.addEventListener('change', () => showThemePreview(input, preview));
+}
+
+
+
+/**
+ * Initializes click-based theme preview behavior.
  * @returns Nothing.
  */
 function initThemePreview(): void {
     const inputs = document.querySelectorAll<HTMLInputElement>('input[name="theme"]');
     const preview = document.querySelector<HTMLImageElement>('#theme-preview');
+    const selected = document.querySelector<HTMLInputElement>('input[name="theme"]:checked');
 
     if (!preview) return;
-    inputs.forEach((input) => input.addEventListener('change', () => updateThemePreview(input, preview)));
-    inputs.forEach((input) => updateThemePreview(input, preview));
+    inputs.forEach((input) => bindThemePreview(input, preview));
+    if (selected) showThemePreview(selected, preview);
 }
 
 
@@ -114,6 +130,42 @@ function initThemePreview(): void {
  */
 function getCheckedValue(name: string): string {
     return document.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
+}
+
+
+
+/**
+ * Checks whether all required settings have been selected.
+ * @returns True when the game may be started.
+ */
+function areSettingsComplete(): boolean {
+    return REQUIRED_SETTINGS.every((name) => getCheckedValue(name) !== '');
+}
+
+
+
+/**
+ * Enables the start button only when every required setting is selected.
+ * @returns Nothing.
+ */
+function updateStartButtonState(): void {
+    const startButton = document.querySelector<HTMLButtonElement>('#start-button');
+
+    if (!startButton) return;
+    startButton.disabled = !areSettingsComplete();
+}
+
+
+
+/**
+ * Initializes start-button validation for all settings controls.
+ * @returns Nothing.
+ */
+function initStartButtonState(): void {
+    const inputs = document.querySelectorAll<HTMLInputElement>('.settings-group input');
+
+    inputs.forEach((input) => input.addEventListener('change', updateStartButtonState));
+    updateStartButtonState();
 }
 
 
@@ -178,7 +230,5 @@ export function initSettings(): void {
     bindSummary('player', 'selected-player');
     bindSummary('board-size', 'selected-board-size');
     initThemePreview();
+    initStartButtonState();
 }
-
-
-
