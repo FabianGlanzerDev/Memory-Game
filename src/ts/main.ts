@@ -235,6 +235,8 @@ function keepMatchedCards(): void {
 
     addPoint();
     openedCards = [];
+
+    if (isGameComplete()) scheduleGameOver();
 }
 
 
@@ -320,6 +322,7 @@ function prepareGameScreen(settings: GameSettings): void {
 
 
 function startGame(): void {
+    resetResultFlow();
     prepareGameScreen(getGameSettings());
     document.getElementById('settings-screen')?.classList.add('hidden');
     document.getElementById('game-screen')?.classList.remove('hidden');
@@ -328,6 +331,7 @@ function startGame(): void {
 
 function exitGame(): void {
     resetCardInteraction();
+    resetResultFlow();
     document.getElementById('game-screen')?.classList.add('hidden');
     document.getElementById('settings-screen')?.classList.remove('hidden');
 }
@@ -345,6 +349,7 @@ function init(): void {
     document.getElementById('play-button')?.addEventListener('click', showSettings);
     document.getElementById('start-button')?.addEventListener('click', startGame);
     document.getElementById('exit-button')?.addEventListener('click', exitGame);
+    document.getElementById('new-game-button')?.addEventListener('click', startNewGame);
     initSettings();
 }
 

@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./styles/variables.css">
     <link rel="stylesheet" href="./styles/style.css">
 
+    <script src="./scripts/results.js" defer></script>
     <script src="./scripts/main.js" defer></script>
 </head>
 
@@ -162,6 +163,40 @@
             </header>
 
             <div class="game-board" id="game-board" aria-label="Memory game board"></div>
+        </section>
+
+
+        <section class="result-screen game-over-screen hidden" id="game-over-screen" data-theme="coding">
+            <div class="result-content">
+                <h2 id="game-over-title">Game over</h2>
+                <p>Final score</p>
+
+                <div class="final-score">
+                    <span class="final-score-item final-score-orange">
+                        Orange
+                        <strong id="game-over-orange-score">0</strong>
+                    </span>
+
+                    <span class="final-score-item final-score-blue">
+                        Blue
+                        <strong id="game-over-blue-score">0</strong>
+                    </span>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="result-screen winner-screen hidden" id="winner-screen" data-theme="coding">
+            <div class="result-content">
+                <p class="winner-kicker" id="winner-kicker">The winner is</p>
+                <h2 id="winner-title">Blue Player</h2>
+
+                <div class="result-symbol" id="result-symbol" aria-hidden="true">♟</div>
+
+                <button class="new-game-button" id="new-game-button" type="button">
+                    New game
+                </button>
+            </div>
         </section>
     </main>
 </body>

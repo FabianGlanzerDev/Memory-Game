@@ -166,6 +166,8 @@ function keepMatchedCards() {
     });
     addPoint();
     openedCards = [];
+    if (isGameComplete())
+        scheduleGameOver();
 }
 function closeOpenCards() {
     openedCards.forEach((card) => {
@@ -229,6 +231,7 @@ function prepareGameScreen(settings) {
 }
 function startGame() {
     var _a, _b;
+    resetResultFlow();
     prepareGameScreen(getGameSettings());
     (_a = document.getElementById('settings-screen')) === null || _a === void 0 ? void 0 : _a.classList.add('hidden');
     (_b = document.getElementById('game-screen')) === null || _b === void 0 ? void 0 : _b.classList.remove('hidden');
@@ -236,6 +239,7 @@ function startGame() {
 function exitGame() {
     var _a, _b;
     resetCardInteraction();
+    resetResultFlow();
     (_a = document.getElementById('game-screen')) === null || _a === void 0 ? void 0 : _a.classList.add('hidden');
     (_b = document.getElementById('settings-screen')) === null || _b === void 0 ? void 0 : _b.classList.remove('hidden');
 }
@@ -246,10 +250,11 @@ function initSettings() {
     initThemePreview();
 }
 function init() {
-    var _a, _b, _c;
+    var _a, _b, _c, _d;
     (_a = document.getElementById('play-button')) === null || _a === void 0 ? void 0 : _a.addEventListener('click', showSettings);
     (_b = document.getElementById('start-button')) === null || _b === void 0 ? void 0 : _b.addEventListener('click', startGame);
     (_c = document.getElementById('exit-button')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', exitGame);
+    (_d = document.getElementById('new-game-button')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', startNewGame);
     initSettings();
 }
 init();
