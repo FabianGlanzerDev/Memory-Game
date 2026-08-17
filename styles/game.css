@@ -28,12 +28,6 @@
 
 
 .score-panel,
-.exit-button {
-    min-height: 62px;
-    background-color: var(--game-header-surface);
-}
-
-
 .score-panel {
     display: flex;
     align-items: center;
@@ -99,17 +93,48 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    color: inherit;
+    width: 206px;
+    height: 61px;
+    padding: 0 18px;
+    border: 1px solid var(--color-primary-yellow);
+    background-color: rgb(240 234 110 / 10%);
+    color: var(--color-white);
     font-family: var(--font-display);
-    font-size: 16px;
+    font-size: 24px;
     font-weight: 700;
+    line-height: 1;
     cursor: pointer;
+    box-sizing: border-box;
+    transform-origin: center;
+    transition: border-width 140ms ease, transform 140ms ease;
 }
 
 
-.exit-button:hover {
-    filter: brightness(1.08);
+
+.exit-button-icon {
+    width: 30px;
+    height: 30px;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask: url('../assets/icons/exit-game.svg') center / contain no-repeat;
+    mask: url('../assets/icons/exit-game.svg') center / contain no-repeat;
 }
+
+
+
+.exit-button:hover,
+.exit-button:focus-visible {
+    border-width: 3px;
+    transform: scale(1.005, 1.016);
+}
+
+
+
+.exit-button:focus-visible {
+    outline: 3px solid var(--color-primary-yellow);
+    outline-offset: 4px;
+}
+
 
 
 .game-board {
@@ -467,5 +492,20 @@
 @media (prefers-reduced-motion: reduce) {
     .memory-card-inner {
         transition: none;
+    }
+}
+
+
+@media (max-width: 480px) {
+    .exit-button {
+        width: 170px;
+        height: 52px;
+        font-size: 20px;
+    }
+
+
+    .exit-button-icon {
+        width: 26px;
+        height: 26px;
     }
 }

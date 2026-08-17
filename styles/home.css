@@ -44,24 +44,29 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
-    min-height: 50px;
+    gap: 24px;
+    width: 250px;
+    height: 98px;
     margin: 40px auto 0;
-    padding: 8px 16px;
+    padding: 0 22px;
+    border: 0;
     background-color: var(--color-primary-yellow);
     color: var(--color-primary-dark);
     font-family: var(--font-display);
     font-size: 40px;
     font-weight: 700;
+    line-height: 1;
     cursor: pointer;
-    transition: background-color 180ms ease, transform 180ms ease;
+    transform-origin: center;
+    transition: width 180ms ease, height 180ms ease, transform 180ms ease;
 }
 
 
 
 .play-button-icon {
-    width: 44px;
-    height: 32px;
+    width: 48px;
+    height: 38px;
+    flex-shrink: 0;
     object-fit: contain;
     transform-origin: center;
     transition: transform 180ms ease;
@@ -70,38 +75,44 @@
 
 
 .play-button-arrow {
-    display: inline-block;
-    transition: transform 180ms ease;
+    display: block;
+    width: 40px;
+    height: 30px;
+    flex-shrink: 0;
+    background-image: url('../assets/icons/play-arrow.svg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
 }
 
 
 
-.play-button:hover {
-    background-color: var(--color-primary-yellow);
-    transform: scale(1.05);
+.play-button:hover .play-button-arrow,
+.play-button:focus-visible .play-button-arrow {
+    background-image: url('../assets/icons/play-arrow-hover.svg');
 }
 
 
 
-.play-button:hover .play-button-icon {
-    transform: rotate(-18deg);
+.play-button:hover,
+.play-button:focus-visible {
+    width: 269px;
+    height: 102px;
 }
 
 
 
-.play-button:hover .play-button-arrow {
-    transform: translateX(10px);
+.play-button:hover .play-button-icon,
+.play-button:focus-visible .play-button-icon {
+    transform: rotate(-14deg) scale(1.08);
 }
 
 
 
 .play-button:active {
-    transform: scale(1.02);
-}
-
-
-.play-button:active .play-button-icon {
-    transform: rotate(-18deg) scale(0.96);
+    width: 263px;
+    height: 100px;
+    transform: scale(0.99);
 }
 
 
@@ -152,7 +163,20 @@
 
 
     .play-button {
+        width: 220px;
+        height: 86px;
         font-size: 34px;
+    }
+
+
+    .play-button-icon {
+        width: 38px;
+        height: 29px;
+    }
+
+
+    .play-button-arrow {
+        font-size: 36px;
     }
 
 
@@ -180,8 +204,22 @@
 
 
     .play-button {
+        width: 190px;
+        height: 74px;
         margin-top: 32px;
+        gap: 12px;
         font-size: 28px;
+    }
+
+
+    .play-button-icon {
+        width: 32px;
+        height: 25px;
+    }
+
+
+    .play-button-arrow {
+        font-size: 30px;
     }
 
 
@@ -205,8 +243,20 @@
 
 
     .play-button {
-        min-height: 46px;
+        width: 170px;
+        height: 64px;
         font-size: 24px;
+    }
+
+
+    .play-button-icon {
+        width: 28px;
+        height: 22px;
+    }
+
+
+    .play-button-arrow {
+        font-size: 26px;
     }
 }
 

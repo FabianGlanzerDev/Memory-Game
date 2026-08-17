@@ -241,47 +241,66 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 8px;
+    gap: 10px;
     width: 126px;
-    min-height: 53px;
+    height: 53px;
     margin-left: auto;
     margin-right: 20px;
+    border: 0;
     background-color: var(--color-primary-yellow);
     color: var(--color-primary-dark);
     font-family: var(--font-display);
     font-size: 18px;
     font-weight: 700;
+    line-height: 1;
     cursor: pointer;
-    transition: transform 160ms ease, filter 160ms ease;
+    transform-origin: center;
+    transition: transform 160ms ease;
 }
 
 
 
-.start-button img {
-    width: 36px;
-    height: 36px;
+.start-button-icon {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    background-color: currentColor;
+    -webkit-mask: url('../assets/icons/start-button.svg') center / contain no-repeat;
+    mask: url('../assets/icons/start-button.svg') center / contain no-repeat;
+    transition: width 160ms ease, height 160ms ease, transform 160ms ease;
 }
 
 
 
-.start-button:not(:disabled):hover {
-    filter: brightness(0.94);
-    transform: translateY(-2px);
+.start-button:not(:disabled):hover,
+.start-button:not(:disabled):focus-visible {
+    transform: scale(1.108, 1.144);
+}
+
+
+
+.start-button:not(:disabled):hover .start-button-icon,
+.start-button:not(:disabled):focus-visible .start-button-icon {
+    width: 30px;
+    height: 30px;
+    transform: rotate(-5.329deg);
 }
 
 
 
 .start-button:disabled {
-    background-color: #dedede;
-    color: #8a8a8a;
+    background-color: #dbdbd6;
+    color: #a3a1a1;
     cursor: not-allowed;
+    transform: none;
 }
 
 
 
-.start-button:disabled img {
-    filter: grayscale(1);
-    opacity: 0.45;
+.start-button:disabled .start-button-icon {
+    width: 24px;
+    height: 24px;
+    transform: none;
 }
 
 
@@ -290,6 +309,8 @@
     outline: 3px solid var(--color-board-blue);
     outline-offset: 4px;
 }
+
+
 
 @keyframes selection-in {
     from {
