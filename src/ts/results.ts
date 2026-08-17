@@ -1,32 +1,56 @@
+import { GAME_TIMING } from './config.js';
+import type { Player } from './config.js';
+import { getScores } from './scoring.js';
+import { scrollToScreenTop } from './navigation.js';
+import { getGameSettings } from './settings.js';
+
+
+type GameResult = Player | 'draw';
+type ResultIcon = 'pawn' | 'scale' | 'trophy';
+
+
 let resultTimeout: number | undefined;
 
 
-function isGameComplete(): boolean {
-    const cards = Array.from(document.querySelectorAll<HTMLButtonElement>('.memory-card'));
-
-    return cards.length > 0 && cards.every((card) => card.dataset.matched === 'true');
-}
-
-
+/**
+ * Clears any pending result-screen timeout.
+ * @returns Nothing.
+ */
 function clearResultTimeout(): void {
     if (resultTimeout !== undefined) window.clearTimeout(resultTimeout);
-
     resultTimeout = undefined;
 }
 
 
+
+/**
+ * Hides both result screens.
+ * @returns Nothing.
+ */
 function hideResultScreens(): void {
     document.getElementById('game-over-screen')?.classList.add('hidden');
     document.getElementById('winner-screen')?.classList.add('hidden');
 }
 
 
+
+/**
+ * Applies the active theme to both result screens.
+ * @param theme - The selected theme identifier.
+ * @returns Nothing.
+ */
 function syncResultTheme(theme: string): void {
     document.getElementById('game-over-screen')?.setAttribute('data-theme', theme);
     document.getElementById('winner-screen')?.setAttribute('data-theme', theme);
 }
 
 
+
+/**
+ * Updates the game-over headline for the selected theme.
+ * @param theme - The selected theme identifier.
+ * @returns Nothing.
+ */
 function updateGameOverTitle(theme: string): void {
     const title = document.getElementById('game-over-title');
 
@@ -34,7 +58,13 @@ function updateGameOverTitle(theme: string): void {
 }
 
 
+
+/**
+ * Writes the final player scores to the game-over screen.
+ * @returns Nothing.
+ */
 function updateFinalScore(): void {
+    const scores = getScores();
     const blueScore = document.getElementById('game-over-blue-score');
     const orangeScore = document.getElementById('game-over-orange-score');
 
@@ -43,42 +73,70 @@ function updateFinalScore(): void {
 }
 
 
-function getWinner(): Player | 'draw' {
-    if (scores.blue === scores.orange) return 'draw';
 
+/**
+ * Determines the winner from the current scores.
+ * @returns The winning player or draw when both scores are equal.
+ */
+function getWinner(): GameResult {
+    const scores = getScores();
+
+    if (scores.blue === scores.orange) return 'draw';
     return scores.blue > scores.orange ? 'blue' : 'orange';
 }
 
 
-function getResultSymbol(winner: Player | 'draw'): string {
-    if (winner === 'draw') return '⚖︎';
 
-    return getGameSettings().theme === 'gaming' ? '🏆︎' : '♙';
+/**
+ * Selects the result icon that matches the Figma theme.
+ * @param winner - The current game result.
+ * @returns The icon identifier used by the result screen.
+ */
+function getResultIcon(winner: GameResult): ResultIcon {
+    if (winner === 'draw') return 'scale';
+    return getGameSettings().theme === 'gaming' ? 'trophy' : 'pawn';
 }
 
 
-function updateWinnerContent(winner: Player | 'draw'): void {
+
+/**
+ * Updates all winner or draw screen content.
+ * @param winner - The current game result.
+ * @returns Nothing.
+ */
+function updateWinnerContent(winner: GameResult): void {
     const screen = document.getElementById('winner-screen');
     const kicker = document.getElementById('winner-kicker');
     const title = document.getElementById('winner-title');
-    const symbol = document.getElementById('result-symbol');
+    const icon = document.getElementById('result-icon');
 
     screen?.classList.toggle('is-draw', winner === 'draw');
     if (kicker) kicker.textContent = winner === 'draw' ? "It's a" : 'The winner is';
     if (title) title.textContent = winner === 'draw' ? 'DRAW' : `${winner === 'blue' ? 'Blue' : 'Orange'} Player`;
-    if (symbol) symbol.textContent = getResultSymbol(winner);
+    icon?.setAttribute('data-icon', getResultIcon(winner));
     screen?.setAttribute('data-winner', winner);
 }
 
 
+
+/**
+ * Replaces the game-over screen with the winner or draw screen.
+ * @returns Nothing.
+ */
 function showWinnerScreen(): void {
     document.getElementById('game-over-screen')?.classList.add('hidden');
     updateWinnerContent(getWinner());
     document.getElementById('winner-screen')?.classList.remove('hidden');
+    scrollToScreenTop();
     resultTimeout = undefined;
 }
 
 
+
+/**
+ * Shows the themed game-over screen and final score.
+ * @returns Nothing.
+ */
 function showGameOver(): void {
     const settings = getGameSettings();
 
@@ -87,25 +145,31 @@ function showGameOver(): void {
     updateFinalScore();
     document.getElementById('game-screen')?.classList.add('hidden');
     document.getElementById('game-over-screen')?.classList.remove('hidden');
-    resultTimeout = window.setTimeout(showWinnerScreen, 1800);
+    scrollToScreenTop();
+    resultTimeout = window.setTimeout(showWinnerScreen, GAME_TIMING.winnerDelay);
 }
 
 
-function scheduleGameOver(): void {
-    boardLocked = true;
+
+/**
+ * Schedules the game-over flow after the final match animation.
+ * @returns Nothing.
+ */
+export function scheduleGameOver(): void {
     clearResultTimeout();
-    resultTimeout = window.setTimeout(showGameOver, 550);
+    resultTimeout = window.setTimeout(showGameOver, GAME_TIMING.gameOverDelay);
 }
 
 
-function resetResultFlow(): void {
+
+/**
+ * Resets all result screens and pending result timers.
+ * @returns Nothing.
+ */
+export function resetResultFlow(): void {
     clearResultTimeout();
     hideResultScreens();
 }
 
 
-function startNewGame(): void {
-    resetResultFlow();
-    startGame();
-}
 

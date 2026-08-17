@@ -1,6 +1,4 @@
 :root {
-    --content-width: 1440px;
-
     --font-body: "Almarai", sans-serif;
     --font-display: "Red Rose", serif;
 
@@ -8,7 +6,5 @@
     --color-primary-yellow: #f0ea6e;
     --color-white: #ffffff;
     --color-light-gray: #f6f6f6;
-    --color-theme-pink: #f020c8;
-    --color-player-mint: #1ae5be;
     --color-board-blue: #0635c9;
 }
