@@ -130,25 +130,12 @@ button {
 .settings-wrapper {
     display: grid;
     grid-template-columns: 420px 546px;
-    align-items: start;
+    align-items: center;
     justify-content: center;
-    gap: 141px;
-    width: min(100% - 64px, 1108px);
+    gap: 120px;
+    width: min(100% - 64px, 1180px);
     min-height: 100vh;
     margin: auto;
-}
-
-
-
-.settings-options {
-    margin-top: 127px;
-}
-
-
-
-.settings-preview {
-    width: 546px;
-    margin-top: 243px;
 }
 
 
@@ -193,8 +180,8 @@ button {
 .settings-group {
     display: flex;
     flex-direction: column;
-    gap: 12px;
-    margin-bottom: 49px;
+    gap: 10px;
+    margin-bottom: 46px;
     border: 0;
 }
 
@@ -210,7 +197,7 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
-    margin-bottom: 12px;
+    margin-bottom: 18px;
     font-family: var(--font-display);
     font-size: 20px;
     font-weight: 700;
@@ -219,8 +206,8 @@ button {
 
 
 .settings-group legend img {
-    width: 40px;
-    height: 40px;
+    width: 28px;
+    height: 28px;
 }
 
 
@@ -231,8 +218,8 @@ button {
     align-items: center;
     width: fit-content;
     min-height: 24px;
-    margin-left: 48px;
-    padding-left: 34px;
+    gap: 10px;
+    padding-left: 44px;
     font-size: 16px;
     cursor: pointer;
 }
@@ -242,23 +229,10 @@ button {
 .settings-group input {
     position: absolute;
     left: 0;
-    width: 24px;
-    height: 24px;
-    border: 2px solid var(--color-primary-dark);
-    border-radius: 50%;
-    appearance: none;
-    background-color: var(--color-white);
+    width: 20px;
+    height: 20px;
+    accent-color: var(--color-primary-dark);
     cursor: pointer;
-}
-
-
-
-.settings-group input:checked::after {
-    content: "";
-    position: absolute;
-    inset: 5px;
-    border-radius: 50%;
-    background-color: var(--color-primary-dark);
 }
 
 
@@ -269,7 +243,6 @@ button {
     height: 3px;
     margin-left: 8px;
     background-color: var(--color-primary-yellow);
-    animation: selection-in 180ms ease-out;
 }
 
 
@@ -282,7 +255,12 @@ button {
     height: 9px;
     background-color: var(--color-primary-yellow);
     transform: rotate(45deg);
-    animation: selection-in 180ms ease-out;
+}
+
+
+
+.settings-preview {
+    width: 546px;
 }
 
 
@@ -318,16 +296,11 @@ button {
 }
 
 
-.settings-summary-value.is-updating {
-    animation: summary-update 180ms ease-out;
-}
-
-
 
 .summary-divider {
-    width: 8px;
+    width: 5px;
     height: 56px;
-    flex: 0 0 8px;
+    flex: 0 0 5px;
     background-color: var(--color-primary-yellow);
     transform: skew(-18deg);
 }
@@ -354,39 +327,14 @@ button {
 
 
 .start-button img {
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
 }
 
 
 
 .hidden {
     display: none;
-}
-
-
-
-@keyframes selection-in {
-    from {
-        opacity: 0;
-    }
-
-    to {
-        opacity: 1;
-    }
-}
-
-
-@keyframes summary-update {
-    from {
-        opacity: 0.35;
-        transform: translateY(3px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 
 
@@ -408,18 +356,11 @@ button {
     .settings-wrapper {
         grid-template-columns: 360px 500px;
         gap: 60px;
-        width: min(100% - 48px, 920px);
-    }
-
-
-    .settings-options {
-        margin-top: 100px;
     }
 
 
     .settings-preview {
         width: 500px;
-        margin-top: 180px;
     }
 
 
@@ -468,12 +409,6 @@ button {
     }
 
 
-    .settings-options,
-    .settings-preview {
-        margin-top: 0;
-    }
-
-
     .settings-preview {
         width: 100%;
     }
@@ -516,11 +451,6 @@ button {
 @media (max-width: 600px) {
     .settings-wrapper {
         width: min(100% - 32px, 500px);
-    }
-
-
-    .settings-group label {
-        margin-left: 32px;
     }
 
 
