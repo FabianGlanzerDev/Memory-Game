@@ -137,6 +137,48 @@
 
 
 
+.game-screen[data-theme='gaming'] .memory-card-back {
+    display: block;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+
+.game-screen[data-theme='gaming'] .memory-card-back img {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    border-radius: inherit;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+
+.game-screen[data-theme='projects'] .exit-button {
+    border-color: #1e7594;
+    background-color: rgb(30 117 148 / 8%);
+    color: #1e7594;
+}
+
+
+
+.game-screen[data-theme='foods'] .exit-button {
+    border-color: #ff7f27;
+    background-color: rgb(255 127 39 / 8%);
+    color: #ff7f27;
+}
+
+
+
+.game-screen[data-theme='gaming'][data-size='24'],
+.game-screen[data-theme='gaming'][data-size='36'] {
+    --game-column-gap: 6px;
+    --game-row-gap: 6px;
+}
+
+
 .game-board {
     display: grid;
     grid-template-columns: repeat(var(--board-columns), var(--game-card-width));
@@ -220,6 +262,71 @@
 }
 
 
+
+
+.game-screen[data-theme='coding'] .memory-card-back {
+    background-color: #4dd5bc;
+}
+
+
+
+.game-screen[data-theme='projects'] .memory-card-back {
+    background-color: #1e7594;
+}
+
+
+
+.game-screen[data-theme='foods'] .memory-card-back {
+    background-color: #f3832d;
+}
+
+
+
+
+.game-screen[data-theme='coding'] .memory-card-back,
+.game-screen[data-theme='projects'] .memory-card-back,
+.game-screen[data-theme='foods'] .memory-card-back {
+    display: grid;
+    place-items: center;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+
+.game-screen[data-theme='coding'] .memory-card-back {
+    background-color: #4dd5bc;
+}
+
+
+
+.game-screen[data-theme='projects'] .memory-card-back {
+    background-color: #1e7594;
+}
+
+
+
+.game-screen[data-theme='foods'] .memory-card-back {
+    background-color: #f3832d;
+}
+
+
+
+.game-screen[data-theme='coding'] .memory-card-back img,
+.game-screen[data-theme='projects'] .memory-card-back img,
+.game-screen[data-theme='foods'] .memory-card-back img {
+    display: block;
+    width: 44%;
+    height: 44%;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+    object-fit: contain;
+    object-position: center;
+}
+
+
+
 .game-screen[data-theme='coding'] {
     --game-background: #303131;
     --game-header-surface: rgb(134 233 214 / 20%);
@@ -239,15 +346,16 @@
 
 
 .game-screen[data-theme='gaming'] {
-    --game-background: #294f60;
-    --game-header-surface: rgb(253 150 201 / 20%);
-    --game-card-max-width: 105px;
+    --game-background: #285a6d;
+    --game-header-surface: #445c67;
+    --game-card-max-width: 120px;
     --game-card-width: var(--game-card-max-width);
-    --game-card-ratio: 13 / 15;
-    --game-column-gap: 6px;
-    --game-row-gap: 6px;
+    --game-card-ratio: 1;
+    --game-column-gap: 16px;
+    --game-row-gap: 16px;
     --game-card-radius: 12px;
-    --game-card-outline: #ff31a0;
+    --game-card-outline: rgb(240 32 200 / 45%);
+    color: var(--color-white);
 }
 
 
@@ -256,7 +364,7 @@
     --game-header-surface: #f0f3f4;
     --game-card-max-width: 120px;
     --game-card-width: var(--game-card-max-width);
-    --game-card-ratio: 6 / 5;
+    --game-card-ratio: 1;
     --game-column-gap: 16px;
     --game-row-gap: 16px;
     --game-card-radius: 12px;
@@ -267,7 +375,8 @@
 
 .game-screen[data-theme='projects'][data-size='24'],
 .game-screen[data-theme='projects'][data-size='36'] {
-    --game-column-gap: 8px;
+    --game-column-gap: 6px;
+    --game-row-gap: 6px;
 }
 
 
@@ -278,7 +387,7 @@
     --game-card-width: var(--game-card-max-width);
     --game-card-ratio: 1;
     --game-column-gap: 16px;
-    --game-row-gap: 14px;
+    --game-row-gap: 16px;
     --game-card-radius: 12px;
     --game-card-outline: rgb(255 127 39 / 45%);
     color: var(--color-primary-dark);
@@ -287,7 +396,8 @@
 
 .game-screen[data-theme='foods'][data-size='24'],
 .game-screen[data-theme='foods'][data-size='36'] {
-    --game-column-gap: 8px;
+    --game-column-gap: 6px;
+    --game-row-gap: 6px;
 }
 
 

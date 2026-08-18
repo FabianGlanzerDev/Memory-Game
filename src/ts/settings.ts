@@ -1,6 +1,6 @@
-import { THEME_PREVIEWS } from './config.js';
-import type { CardCount, GameSettings, Player, Theme } from './config.js';
-import { focusWithoutScroll, showScreen } from './navigation.js';
+import { THEME_PREVIEWS } from './config';
+import type { CardCount, GameSettings, Player, Theme } from './config';
+import { focusWithoutScroll, showScreen } from './navigation';
 
 
 const DEFAULT_THEME: Theme = 'coding';

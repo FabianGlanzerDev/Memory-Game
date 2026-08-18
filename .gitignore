@@ -1,5 +1,5 @@
 .DS_Store
 Thumbs.db
 .vscode/
-/build/
-/scripts/
+node_modules/
+dist/

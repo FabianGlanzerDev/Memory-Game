@@ -1,7 +1,7 @@
-import { createCardPaths, GAME_TIMING, THEME_BACKS } from './config.js';
-import type { GameSettings, MemoryCardData } from './config.js';
-import { addPoint, switchPlayer } from './scoring.js';
-import { scheduleGameOver } from './results.js';
+import { createCardPaths, GAME_TIMING, THEME_BACKS } from './config';
+import type { GameSettings, MemoryCardData } from './config';
+import { addPoint, switchPlayer } from './scoring';
+import { scheduleGameOver } from './results';
 
 
 let openedCards: HTMLButtonElement[] = [];

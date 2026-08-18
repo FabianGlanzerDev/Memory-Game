@@ -1,4 +1,4 @@
-import type { Player } from './config.js';
+import type { Player } from './config';
 
 
 let currentPlayer: Player = 'blue';

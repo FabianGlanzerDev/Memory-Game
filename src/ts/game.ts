@@ -1,9 +1,9 @@
-import type { GameSettings } from './config.js';
-import { renderBoard, resetCardInteraction } from './cards.js';
-import { resetResultFlow } from './results.js';
-import { resetPlayerState } from './scoring.js';
-import { getGameSettings, showSettings } from './settings.js';
-import { focusWithoutScroll, showScreen } from './navigation.js';
+import type { GameSettings } from './config';
+import { renderBoard, resetCardInteraction } from './cards';
+import { resetResultFlow } from './results';
+import { resetPlayerState } from './scoring';
+import { getGameSettings, showSettings } from './settings';
+import { focusWithoutScroll, showScreen } from './navigation';
 
 
 /**

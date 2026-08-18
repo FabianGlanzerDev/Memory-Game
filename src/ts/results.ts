@@ -1,8 +1,8 @@
-import { GAME_TIMING } from './config.js';
-import type { Player } from './config.js';
-import { getScores } from './scoring.js';
-import { showScreen } from './navigation.js';
-import { getGameSettings } from './settings.js';
+import { GAME_TIMING } from './config';
+import type { Player } from './config';
+import { getScores } from './scoring';
+import { showScreen } from './navigation';
+import { getGameSettings } from './settings';
 
 
 type GameResult = Player | 'draw';

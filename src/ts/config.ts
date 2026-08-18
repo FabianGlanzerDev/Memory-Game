@@ -25,10 +25,10 @@ export const THEME_PREVIEWS: Record<Theme, string> = {
 
 
 export const THEME_BACKS: Record<Theme, string> = {
-    coding: './assets/img/cards/coding-back.png',
+    coding: './assets/icons/theme-card-icon.png',
     gaming: './assets/img/cards/gaming-back.png',
-    projects: './assets/img/cards/projects-back.png',
-    foods: './assets/img/cards/foods-back.png'
+    projects: './assets/icons/theme-card-icon.png',
+    foods: './assets/icons/theme-card-icon.png'
 };
 
 

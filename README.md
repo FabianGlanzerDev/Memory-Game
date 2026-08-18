@@ -21,27 +21,52 @@ Two-player Memory game created as a Developer Akademie project from the supplied
 - HTML5
 - CSS3
 - TypeScript
+- Vite as the local development and build tool
 
 ## TypeScript workflow
 
-The source code is written **only in TypeScript** inside `src/ts/`.
-Generated JavaScript is written to `build/` by the TypeScript compiler and is intentionally excluded from Git with `.gitignore`.
+All application logic is written in TypeScript inside `src/ts/`.
+There are no hand-written or generated JavaScript source files in the repository.
 
-Do not edit generated JavaScript manually.
+`index.html` loads the TypeScript entry file directly:
+
+```html
+<script type="module" src="/src/ts/main.ts"></script>
+```
+
+Vite handles the TypeScript transformation while the project is running. Generated production files are written to `dist/` and are excluded from Git.
 
 ## Run locally
 
-1. Open the project in VS Code.
-2. Start the TypeScript compiler:
+Install the project dependencies once:
 
-   ```bash
-   tsc --watch
-   ```
+```bash
+npm install
+```
 
-3. Start `index.html` with Live Server.
-4. Keep `tsc --watch` running while developing.
+Start the development server:
 
-The browser loads `build/main.js`, which is generated from the files in `src/ts/`.
+```bash
+npm run dev
+```
+
+Vite prints the local URL in the terminal. Open that URL in the browser.
+
+Do not use Live Server and do not create or edit JavaScript files manually.
+
+## Checks
+
+Run the TypeScript compiler without generating JavaScript files:
+
+```bash
+npm run check
+```
+
+Create a production build when needed:
+
+```bash
+npm run build
+```
 
 ## Project structure
 
@@ -71,6 +96,7 @@ Memory Game/
 │   └── variables.css
 ├── .gitignore
 ├── index.html
+├── package.json
 ├── README.md
 └── tsconfig.json
 ```

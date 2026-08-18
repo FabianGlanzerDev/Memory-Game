@@ -215,7 +215,7 @@
 .settings-summary > span:not(.summary-divider) {
     flex: 1 1 auto;
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: 18px;
     font-weight: 400;
     text-align: center;
 }

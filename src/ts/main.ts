@@ -1,5 +1,5 @@
-import { initExitDialog, startGame } from './game.js';
-import { initSettings, showSettings } from './settings.js';
+import { initExitDialog, startGame } from './game';
+import { initSettings, showSettings } from './settings';
 
 
 /**
