@@ -100,3 +100,12 @@ Memory Game/
 ├── README.md
 └── tsconfig.json
 ```
+
+## Mobile home screen
+
+The project includes mobile app metadata and icons.
+
+- Android uses `public/manifest.webmanifest`.
+- iOS uses `public/icons/apple-touch-icon.png`.
+- The installed home-screen version opens in standalone mode where supported.
+
